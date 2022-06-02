@@ -26,7 +26,19 @@ func main() {
 	if a==b && a==c && a==d && b==c && b==d && c==d {
 		fmt.Println(a)
 	}else if (a==b && b==d) || (b==c && c==d) || (a==c && b==c) || (a==c && c==d) {
-		if 
+		if c!=a {
+			fmt.Println(a)
+			fmt.Println(c)
+		} else if a!=b{
+			fmt.Println(a)
+			fmt.Println(b)
+		} else if d!=a{
+			fmt.Println(d)
+			fmt.Println(f)
+		} else if b!=d{
+			fmt.Println(b)
+			fmt.Println(d)
+		}	
 	}else if ((a==b && c==d) || (b==c && a==d) || (a==c && b==d)) {
 		if a!=b {
 			fmt.Println(a)
