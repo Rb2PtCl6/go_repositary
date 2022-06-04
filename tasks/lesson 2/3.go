@@ -36,7 +36,7 @@ func main() {
 		fmt.Println(c)
 		fmt.Println(a)
 	} else if c > a && c > b && a > b {
-		fmt.Println(a)
+		fmt.Println(c)
 		fmt.Println(a)
 		fmt.Println(b)
 	} else if c > a && c > b && a < b {
