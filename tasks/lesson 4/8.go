@@ -12,20 +12,16 @@ func main() {
 	fmt.Print("num: ")
 	fmt.Scan(&num)
 	fmt.Println()
-	fmt.Print("length: ")
-	//fmt.Scan(&lengthS)
-	fmt.Println()
 	/*for i := lengthS; i > 0; i-- {
 		rez += strconv.Itoa((num % 10))
 		num /= 10
 	}*/
 	for {
-		rez2 = rez2*10 + (num % 10)
+		rez2 += (num % 10)
 		num /= 10
 		if num == 0 {
 			break
 		}
 	}
-	//fmt.Println(rez)
 	fmt.Println(rez2)
 }
