@@ -18,5 +18,5 @@ func main() {
 	} else if (num%10) == 5 || (num%10) == 6 || (num%10) == 7 || (num%10) == 8 || (num%10) == 9 {
 		name = name3
 	}
-	fmt.Printf("%v %v\n", num, name)
+	fmt.Printf("%v %v", num, name)
 }

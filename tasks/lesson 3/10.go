@@ -32,7 +32,3 @@ func main() {
 	fmt.Println()
 	fmt.Printf("coordinates: %v, %v", x1, y3)
 }
-
-// no
-//6,8,9,10,13,14,15,16
-//6,8,9,10,13,14,15,16

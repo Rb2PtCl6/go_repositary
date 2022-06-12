@@ -13,6 +13,14 @@ func main() {
 	fmt.Print("b: ")
 	fmt.Scan(&b)
 	fmt.Println()
-	if (a>b){pr="1"} else if (a<b){pr="2"} else if (a==b){pr="0"}else{pr="Unknown error!"}
+	if a > b {
+		pr = "1"
+	} else if a < b {
+		pr = "2"
+	} else if a == b {
+		pr = "0"
+	} else {
+		pr = "Unknown error!"
+	}
 	fmt.Println(pr)
 }
