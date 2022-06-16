@@ -21,18 +21,14 @@ func scan() string {
 func test() bool {
 	str := scan()
 	for _, sumb := range str {
-		if sumb != 32 && (sumb < 65 && sumb > 90) || (sumb < 97 && sumb > 122) {
+		if (sumb < 65 && sumb > 90) || (sumb < 97 && sumb > 122) {
 			//A-Z a-z http://yuschikev.narod.ru/Teoria/Inform/kod_tex.html
-			return false
-		} else if sumb > 90 && sumb < 97 {
-			return false
-		} else if sumb > 122 {
-			return false
 		}
 	}
-	return true
 }
 func main() {
-	fmt.Println("You can print!")
-	fmt.Printf("only english: %v\n", test())
+	var some float64
+	fmt.Print("text: ")
+	fmt.Scan(&some)
+	fmt.Println()
 }
