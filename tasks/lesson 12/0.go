@@ -13,36 +13,34 @@ func count1() map[rune]int {
 	}
 	defer file.Close()
 	file_r := bufio.NewScanner(file)
-	const russian = "аАбБиИйЙ"
-	russian1 := []rune(russian)
 	map1 := make(map[rune]int)
-	map1['а'] = 0
+	/*map1['а'] = 0
 	map1['А'] = 0
 	map1['б'] = 0
 	map1['Б'] = 0
 	map1['и'] = 0
 	map1['И'] = 0
 	map1['й'] = 0
-	map1['Й'] = 0
+	map1['Й'] = 0*/
 	for file_r.Scan() {
 		file_t := []rune(file_r.Text())
 		for _, simb := range file_t {
 			if simb == 'а' {
-				map1[russian1[0]]++
+				map1['а']++
 			} else if simb == 'А' {
-				map1[russian1[1]]++
+				map1['А']++
 			} else if simb == 'б' {
-				map1[russian1[2]]++
+				map1['б']++
 			} else if simb == 'Б' {
-				map1[russian1[3]]++
+				map1['Б']++
 			} else if simb == 'и' {
-				map1[russian1[4]]++
+				map1['и']++
 			} else if simb == 'И' {
-				map1[russian1[5]]++
+				map1['И']++
 			} else if simb == 'й' {
-				map1[russian1[6]]++
+				map1['й']++
 			} else if simb == 'Й' {
-				map1[russian1[7]]++
+				map1['Й']++
 			}
 		}
 	}
