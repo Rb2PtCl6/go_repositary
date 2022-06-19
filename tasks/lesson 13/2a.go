@@ -32,13 +32,8 @@ func scanning1() ([]map[string]string, int) {
 		base[i] = make(map[string]string)
 		str := row_s.Text()
 		str1 := strings.Split(str, " ")
-		for i0 := 0; i0 < 2; i0++ {
-			if i0 == 0 {
-				base[i]["who"] = str1[0]
-			} else if i0 == 1 {
-				base[i]["what"] = str1[1]
-			}
-		}
+		base[i]["who"] = str1[0]
+		base[i]["what"] = str1[1]
 		i++
 	}
 	return base, max_len()
@@ -71,20 +66,42 @@ func count_D() (how_m_who map[string]int) {
 	base, max := scanning1()
 	how_m_who = make(map[string]int)
 	for i := 0; i < max; i++ {
-		for word, _ := range how_m_who {
-			if word == base[i]["who"] {
-				how_m_who[word]++
+		if i == 0 {
+			how_m_who[base[i]["who"]]++
+			continue
+		}
+		for i1 := 0; i1 < len(how_m_who); i1++ {
+			if how_m_who[base[i]["who"]] > 0 {
+				how_m_who[base[i]["who"]]++
 				break
-			} else {
+			}
+			if i1 == len(how_m_who)-1 {
 				how_m_who[base[i]["who"]]++
 			}
 		}
 	}
 	return
 }
+func count_G() {
+	base, max := scanning1()
+	file, err := os.Create("2-rez.txt")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer file.Close()
+	row_s1 := bufio.NewWriter(file)
+	defer row_s1.Flush()
+	for i := 0; i < max; i++ {
+		fmt.Fprintf(row_s1, "%s %s", string(base[i]["who"]), string(base[i]["what"]))
+		if i < max-1 {
+			fmt.Fprint(row_s1, "\n")
+		}
+	}
+}
 func main() {
 	cust, order := count_A_B()
 	fmt.Printf("cust: %d\norder: %d\n", cust, order)
 	how_m_who := count_D()
 	fmt.Println(how_m_who)
+	count_G()
 }
