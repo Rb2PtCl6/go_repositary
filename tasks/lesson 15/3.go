@@ -10,8 +10,8 @@ func main() {
 	fmt.Print("mount: ")
 	fmt.Scan(&mount)
 	fmt.Println()
-	mount1:=[]rune(mount)
-	for i,_:=range mount1{
+	mount1 := []rune(mount)
+	for i, _ := range mount1 {
 		if i//если сомвол большой, сделать его маленьким( юникод),а затем заменить его для для более точного сравнения
 	}
 	switch mount {
