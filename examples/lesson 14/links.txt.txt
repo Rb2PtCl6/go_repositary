@@ -1,0 +1,15 @@
+Install GIT (link):
+https://git-scm.com/download/win
+
+Install termbox (command):
+go get "github.com/nsf/termbox-go"
+
+Initialize go project (commands):
+go mod init NAME
+go mod tidy
+
+Termbox documentation (link):
+https://pkg.go.dev/github.com/nsf/termbox-go
+
+Termbox import (go code):
+import "github.com/nsf/termbox-go"
