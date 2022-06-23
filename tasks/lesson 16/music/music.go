@@ -44,10 +44,11 @@ func read_file() (base []tMusic) {
 	i := 0
 	skip := 0
 	var ref string
+	plus := 0
 	for reader.Scan() {
 		str := []rune(reader.Text())
 		var strT0 string
-		plus := 0
+		//plus := 0
 		for i0 := 0; i0 < 5; i0++ {
 			fmt.Println(i0)
 			//for {
