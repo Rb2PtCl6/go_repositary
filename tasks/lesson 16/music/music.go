@@ -57,6 +57,7 @@ func read_file() (base []tMusic) {
 					skip--
 					continue
 				}
+				fmt.Println(skip)
 				var case0 int
 				fmt.Println("cic")
 				if str[plus+ind] == '[' || case0 == 0 {
@@ -68,7 +69,7 @@ func read_file() (base []tMusic) {
 					//fmt.Println(strT0)
 					if str[plus+ind+1] == ']' {
 						yu := 0
-						fmt.Println("tit")
+						fmt.Println("mim")
 						//strT1 := []rune(str)
 						//strT0 = strT0[:len(strT0)-]
 					out:
