@@ -42,6 +42,8 @@ func read_file() (base []tMusic) {
 	max := max_num()
 	base = make([]tMusic, max)
 	i := 0
+	skip := 0
+	var ref string
 	for reader.Scan() {
 		str := []rune(reader.Text())
 		var strT0 string
@@ -49,7 +51,11 @@ func read_file() (base []tMusic) {
 		for i0 := 0; i0 < 5; i0++ {
 			fmt.Println(i0)
 			//for {
-			for ind, _ := range str {
+			for ind, simb := range str {
+				if skip > 0 {
+					skip--
+					continue
+				}
 				var case0 int
 				fmt.Println("cic")
 				if str[plus+ind] == '[' || case0 == 0 {
@@ -57,49 +63,67 @@ func read_file() (base []tMusic) {
 						case0 = 0
 						continue
 					}
-					strT0 += string(str[plus+ind])
-					if str[plus+ind] == ']' || case0 == 0 {
+					strT0 += string(simb)
+					//fmt.Println(strT0)
+					if str[plus+ind+1] == ']' {
 						yu := 0
 						fmt.Println("tit")
-						strT1 := []rune(str)
-						//strT1 = strT1[:len(strT1)-1]
+						//strT1 := []rune(str)
+						//strT0 = strT0[:len(strT0)-]
 					out:
 						for {
 							fmt.Println("rir", yu)
 							yu++
 							var rez string
 							strT2 := make([]rune, 1)
-							fmt.Println(string(strT1))
-							switch string(strT1) {
+							//fmt.Println(string(strT1))
+							switch string(strT0) {
 							case "artist":
-								for i = plus + ind + 1; ; i++ {
-									if str[i] == '[' || str[i] == '&' || str[i] == '#' {
+								for i = plus + ind + 2; ; i++ {
+									//fmt.Println("lolo")
+									if str[i+1] == '[' || str[i+1] == '&' || str[i+1] == '#' {
 										rez = string(strT2)
+										plus += (i + 2) - plus - ind
+										skip = 2
+										strT0 = ""
 										break
 									}
 									strT2 = append(strT2, str[i])
+									ref = string(strT2)
+									fmt.Println(ref)
 								}
 								base[i].artist = rez
+								fmt.Println(base[i].artist)
 								case0 = 1
 								break out
 							case "genre":
 								for i = plus + ind + 1; ; i++ {
-									if str[i] == '[' || str[i] == '&' || str[i] == '#' {
+									if str[i+1] == '[' || str[i+1] == '&' || str[i+1] == '#' {
 										rez = string(strT2)
+										plus += (i + 2) - plus - ind
+										skip = 2
+										strT0 = ""
 										break
 									}
 									strT2 = append(strT2, str[i])
+									ref = string(strT2)
+									fmt.Println(ref)
 								}
 								base[i].genre = rez
 								case0 = 1
 								break out
 							case "title":
 								for i = plus + ind + 1; ; i++ {
-									if str[i] == '[' || str[i] == '&' || str[i] == '#' {
+									if str[i+1] == '[' || str[i+1] == '&' || str[i+1] == '#' {
 										rez = string(strT2)
+										plus += (i + 2) - plus - ind
+										skip = 2
+										strT0 = ""
 										break
 									}
 									strT2 = append(strT2, str[i])
+									ref = string(strT2)
+									fmt.Println(ref)
 								}
 								base[i].album_title = rez
 								case0 = 1
