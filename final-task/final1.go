@@ -3,10 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
-	//"github.com/nsf/termbox-go"
+	"time"
+
 	"os"
 	"sort"
 	"strconv"
+
+	"github.com/nsf/termbox-go"
 )
 
 type storage struct {
@@ -256,6 +259,28 @@ func drawpattern(termboxstatus, isfile, pos int, pattern [12][20]bool) {
 			}
 			fmt.Fprintln(file)
 		}
+	} else if termboxstatus == 1 {
+		err := termbox.Init()
+		if err != nil {
+			return
+		}
+		defer termbox.Close()
+		//w, h := termbox.Size()
+		pos := 0
+		for i := 0; i < 21; i++ {
+			if i == 20 {
+				for i6 := 0; i6 < 12; i6++ {
+					drawnum(1, 0, data[i6].amount, pos, i)
+				}
+				continue
+			}
+			for i5 := 0; i5 < 12; i5++ {
+				drawline(1, 0, pattern[i5][i], pos, i)
+			}
+			pos += 3
+		}
+		pos = 0
+		time.Sleep(10 * time.Second)
 	}
 }
 func drawline(termboxstatus, isfile int, line bool, cordx, cordy int) {
@@ -265,8 +290,18 @@ func drawline(termboxstatus, isfile int, line bool, cordx, cordy int) {
 		} else {
 			fmt.Print("   ")
 		}
-	} else {
-		//
+	} else if termboxstatus == 1 {
+		for dr := 0; dr < 3; dr++ {
+			if line {
+				termbox.SetCell(cordx+dr, cordy, ' ', termbox.ColorGreen, termbox.ColorGreen)
+				termbox.Flush()
+			} else {
+				termbox.SetCell(cordx+dr, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+				termbox.Flush()
+			}
+		}
+		termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+		termbox.Flush()
 	}
 }
 func drawnum(termboxstatus, isfile int, num int, cordx, cordy int) {
@@ -334,6 +369,156 @@ func drawnum(termboxstatus, isfile int, num int, cordx, cordy int) {
 			break
 		case 20:
 			fmt.Print("20 ")
+			break
+		}
+	} else if termboxstatus == 1 {
+		switch num {
+		case 0:
+			termbox.SetCell(cordx+0, cordy, '0', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 1:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 2:
+			termbox.SetCell(cordx+0, cordy, '2', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 3:
+			termbox.SetCell(cordx+0, cordy, '3', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 4:
+			termbox.SetCell(cordx+0, cordy, '4', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 5:
+			termbox.SetCell(cordx+0, cordy, '5', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 6:
+			termbox.SetCell(cordx+0, cordy, '6', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 7:
+			termbox.SetCell(cordx+0, cordy, '7', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 8:
+			termbox.SetCell(cordx+0, cordy, '8', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 9:
+			termbox.SetCell(cordx+0, cordy, '9', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 10:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '0', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 11:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 12:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '2', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 13:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '3', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 14:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '4', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 15:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '5', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 16:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '6', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 17:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '7', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 18:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '8', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 19:
+			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '9', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
+			break
+		case 20:
+			termbox.SetCell(cordx+0, cordy, '2', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+1, cordy, '0', termbox.ColorWhite, termbox.ColorBlack)
+			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
+			termbox.Flush()
 			break
 		}
 	}
@@ -414,8 +599,8 @@ func task5() {
 	//drawpattern(0, 1, 1, createpattern("down"))
 }
 func task6() {
-	//data := reader()
-	drawpattern(0, 1, 2, createpattern("up"))
+	//drawpattern(0, 1, 2, createpattern("up"))
+	drawpattern(1, 0, 0, createpattern("up"))
 }
 func main() {
 	//var some float64
@@ -437,5 +622,4 @@ func main() {
 	if true {
 		task6()
 	}
-	//fmt.Println(createpattern("up"))
 }
