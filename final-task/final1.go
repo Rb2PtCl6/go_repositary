@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/nsf/termbox-go"
+	//"github.com/nsf/termbox-go"
 	"os"
 	"sort"
 	"strconv"
@@ -47,7 +47,297 @@ func reader() []storage {
 	}
 	return data
 }
+func createpattern(direction string) (pattern [12][20]bool) {
+	// "up" or "down"
+	data := reader()
+	if direction == "down" {
+		for i := 0; i < 12; i++ {
+			for i3 := 0; i3 < data[i].amount; i3++ {
+				pattern[i][i3] = true
+			}
+			for i4 := data[i].amount; i4 < 20; i4++ {
+				pattern[i][i4] = false
+			}
+		}
+	} else {
+		for i := 0; i < 12; i++ {
+			for i3 := 0; i3 < 20-data[i].amount; i3++ {
+				pattern[i][i3] = false
+			}
+			for i4 := 20 - data[i].amount; i4 < 20; i4++ {
+				pattern[i][i4] = true
+			}
+		}
+	}
+	return pattern
+}
+func drawpattern(termboxstatus, isfile, pos int, pattern [12][20]bool) {
+	data := reader()
+	var x0 int
+	if pos == 1 {
+		x0 = 1
+	}
+	if termboxstatus == 0 && isfile == 0 {
+		for i := 0; i < 21; i++ {
+			if i == 0 {
+				for i1 := 0; i1 < 12; i1++ {
+					drawnum(0, 0, data[i1].amount, 0, 0)
+					fmt.Print(" ")
+				}
+				fmt.Println()
+				continue
+			}
+			for i2 := 0; i2 < 12; i2++ {
+				drawline(0, 0, pattern[i2][i-1], 0, 0)
+				fmt.Print(" ")
+			}
+			fmt.Println()
+		}
+	} else if termboxstatus == 0 && isfile == 1 {
+		file, err := os.Create("tmp/barchart2.txt")
+		if err != nil {
+			return
+		}
+		if pos == 2 {
+			defer os.Rename("tmp/barchart2.txt", "tmp/barchart3.txt")
+		}
+		defer file.Close()
+		row := bufio.NewWriter(file)
+		defer row.Flush()
+		for i := 0; i < 21; i++ {
+			if pos == 1 && i == 0 {
+				for i2 := 0; i2 < 12; i2++ {
+					switch data[i2].amount {
+					case 0:
+						fmt.Fprint(file, "0   ")
+						break
+					case 1:
+						fmt.Fprint(file, "1   ")
+						break
+					case 2:
+						fmt.Fprint(file, "2   ")
+						break
+					case 3:
+						fmt.Fprint(file, "3   ")
+						break
+					case 4:
+						fmt.Fprint(file, "4   ")
+						break
+					case 5:
+						fmt.Fprint(file, "5   ")
+						break
+					case 6:
+						fmt.Fprint(file, "6   ")
+						break
+					case 7:
+						fmt.Fprint(file, "7   ")
+						break
+					case 8:
+						fmt.Fprint(file, "8   ")
+						break
+					case 9:
+						fmt.Fprint(file, "9   ")
+						break
+					case 10:
+						fmt.Fprint(file, "10  ")
+						break
+					case 11:
+						fmt.Fprint(file, "11  ")
+						break
+					case 12:
+						fmt.Fprint(file, "12  ")
+						break
+					case 13:
+						fmt.Fprint(file, "13  ")
+						break
+					case 14:
+						fmt.Fprint(file, "14  ")
+						break
+					case 15:
+						fmt.Fprint(file, "15  ")
+						break
+					case 16:
+						fmt.Fprint(file, "16  ")
+						break
+					case 17:
+						fmt.Fprint(file, "17  ")
+						break
+					case 18:
+						fmt.Fprint(file, "18  ")
+						break
+					case 19:
+						fmt.Fprint(file, "19  ")
+						break
+					case 20:
+						fmt.Fprint(file, "20  ")
+						break
+					}
+				}
+				fmt.Fprintln(file)
+				continue
+			} else if pos == 2 && i == 20 {
+				for i2 := 0; i2 < 12; i2++ {
+					switch data[i2].amount {
+					case 0:
+						fmt.Fprint(file, "0   ")
+						break
+					case 1:
+						fmt.Fprint(file, "1   ")
+						break
+					case 2:
+						fmt.Fprint(file, "2   ")
+						break
+					case 3:
+						fmt.Fprint(file, "3   ")
+						break
+					case 4:
+						fmt.Fprint(file, "4   ")
+						break
+					case 5:
+						fmt.Fprint(file, "5   ")
+						break
+					case 6:
+						fmt.Fprint(file, "6   ")
+						break
+					case 7:
+						fmt.Fprint(file, "7   ")
+						break
+					case 8:
+						fmt.Fprint(file, "8   ")
+						break
+					case 9:
+						fmt.Fprint(file, "9   ")
+						break
+					case 10:
+						fmt.Fprint(file, "10  ")
+						break
+					case 11:
+						fmt.Fprint(file, "11  ")
+						break
+					case 12:
+						fmt.Fprint(file, "12  ")
+						break
+					case 13:
+						fmt.Fprint(file, "13  ")
+						break
+					case 14:
+						fmt.Fprint(file, "14  ")
+						break
+					case 15:
+						fmt.Fprint(file, "15  ")
+						break
+					case 16:
+						fmt.Fprint(file, "16  ")
+						break
+					case 17:
+						fmt.Fprint(file, "17  ")
+						break
+					case 18:
+						fmt.Fprint(file, "18  ")
+						break
+					case 19:
+						fmt.Fprint(file, "19  ")
+						break
+					case 20:
+						fmt.Fprint(file, "20  ")
+						break
+					}
+				}
+				fmt.Fprintln(file)
+				continue
+			}
+			for i3 := 0; i3 < 12; i3++ {
+				if pattern[i3][i-x0] {
+					fmt.Fprint(file, "*** ")
+				} else {
+					fmt.Fprint(file, "    ")
+				}
 
+			}
+			fmt.Fprintln(file)
+		}
+	}
+}
+func drawline(termboxstatus, isfile int, line bool, cordx, cordy int) {
+	if termboxstatus == 0 && isfile == 0 {
+		if line {
+			fmt.Print("***")
+		} else {
+			fmt.Print("   ")
+		}
+	} else {
+		//
+	}
+}
+func drawnum(termboxstatus, isfile int, num int, cordx, cordy int) {
+	if termboxstatus == 0 && isfile == 0 {
+		switch num {
+		case 0:
+			fmt.Print("0  ")
+			break
+		case 1:
+			fmt.Print("1  ")
+			break
+		case 2:
+			fmt.Print("2  ")
+			break
+		case 3:
+			fmt.Print("3  ")
+			break
+		case 4:
+			fmt.Print("4  ")
+			break
+		case 5:
+			fmt.Print("5  ")
+			break
+		case 6:
+			fmt.Print("6  ")
+			break
+		case 7:
+			fmt.Print("7  ")
+			break
+		case 8:
+			fmt.Print("8  ")
+			break
+		case 9:
+			fmt.Print("9  ")
+			break
+		case 10:
+			fmt.Print("10 ")
+			break
+		case 11:
+			fmt.Print("11 ")
+			break
+		case 12:
+			fmt.Print("12 ")
+			break
+		case 13:
+			fmt.Print("13 ")
+			break
+		case 14:
+			fmt.Print("14 ")
+			break
+		case 15:
+			fmt.Print("15 ")
+			break
+		case 16:
+			fmt.Print("16 ")
+			break
+		case 17:
+			fmt.Print("17 ")
+			break
+		case 18:
+			fmt.Print("18 ")
+			break
+		case 19:
+			fmt.Print("19 ")
+			break
+		case 20:
+			fmt.Print("20 ")
+			break
+		}
+	}
+}
 func task2() {
 	//data := reader()
 }
@@ -120,22 +410,12 @@ func task4() {
 }
 
 func task5() {
-	data := reader()
-	basepos := 0
-	err_term := termbox.Init()
-	if err_term != nil {
-		return
-	}
-	defer termbox.Close()
-	w, h := termbox.Size()
-	for i2 := 0; i2 < 12; i2++ {
-		if data[i2].amount < 10 {
-			termbox.SetCell(0, basepos, data[i2].amount)
-		}
-	}
+	//drawpattern(0, 0, 0, createpattern("down"))
+	//drawpattern(0, 1, 1, createpattern("down"))
 }
 func task6() {
 	//data := reader()
+	drawpattern(0, 1, 2, createpattern("up"))
 }
 func main() {
 	//var some float64
@@ -151,11 +431,11 @@ func main() {
 	if false {
 		task4()
 	}
-	if true {
+	if false {
 		task5()
 	}
-	if false {
+	if true {
 		task6()
 	}
-
+	//fmt.Println(createpattern("up"))
 }
