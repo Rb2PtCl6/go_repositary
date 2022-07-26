@@ -74,13 +74,13 @@ func createpattern(direction string) (pattern [12][20]bool) {
 	}
 	return pattern
 }
-func drawpattern(termboxstatus, isfile, pos int, pattern [12][20]bool) {
+func drawpattern(istermbox, isfile, pos int, pattern [12][20]bool) {
 	data := reader()
 	var x0 int
 	if pos == 1 {
 		x0 = 1
 	}
-	if termboxstatus == 0 && isfile == 0 {
+	if istermbox == 0 && isfile == 0 {
 		for i := 0; i < 21; i++ {
 			if i == 0 {
 				for i1 := 0; i1 < 12; i1++ {
@@ -96,7 +96,7 @@ func drawpattern(termboxstatus, isfile, pos int, pattern [12][20]bool) {
 			}
 			fmt.Println()
 		}
-	} else if termboxstatus == 0 && isfile == 1 {
+	} else if istermbox == 0 && isfile == 1 {
 		file, err := os.Create("tmp/barchart2.txt")
 		if err != nil {
 			return
@@ -110,141 +110,13 @@ func drawpattern(termboxstatus, isfile, pos int, pattern [12][20]bool) {
 		for i := 0; i < 21; i++ {
 			if pos == 1 && i == 0 {
 				for i2 := 0; i2 < 12; i2++ {
-					switch data[i2].amount {
-					case 0:
-						fmt.Fprint(file, "0   ")
-						break
-					case 1:
-						fmt.Fprint(file, "1   ")
-						break
-					case 2:
-						fmt.Fprint(file, "2   ")
-						break
-					case 3:
-						fmt.Fprint(file, "3   ")
-						break
-					case 4:
-						fmt.Fprint(file, "4   ")
-						break
-					case 5:
-						fmt.Fprint(file, "5   ")
-						break
-					case 6:
-						fmt.Fprint(file, "6   ")
-						break
-					case 7:
-						fmt.Fprint(file, "7   ")
-						break
-					case 8:
-						fmt.Fprint(file, "8   ")
-						break
-					case 9:
-						fmt.Fprint(file, "9   ")
-						break
-					case 10:
-						fmt.Fprint(file, "10  ")
-						break
-					case 11:
-						fmt.Fprint(file, "11  ")
-						break
-					case 12:
-						fmt.Fprint(file, "12  ")
-						break
-					case 13:
-						fmt.Fprint(file, "13  ")
-						break
-					case 14:
-						fmt.Fprint(file, "14  ")
-						break
-					case 15:
-						fmt.Fprint(file, "15  ")
-						break
-					case 16:
-						fmt.Fprint(file, "16  ")
-						break
-					case 17:
-						fmt.Fprint(file, "17  ")
-						break
-					case 18:
-						fmt.Fprint(file, "18  ")
-						break
-					case 19:
-						fmt.Fprint(file, "19  ")
-						break
-					case 20:
-						fmt.Fprint(file, "20  ")
-						break
-					}
+					fmt.Fprintf(file, "%-4d", data[i2].amount)
 				}
 				fmt.Fprintln(file)
 				continue
 			} else if pos == 2 && i == 20 {
 				for i2 := 0; i2 < 12; i2++ {
-					switch data[i2].amount {
-					case 0:
-						fmt.Fprint(file, "0   ")
-						break
-					case 1:
-						fmt.Fprint(file, "1   ")
-						break
-					case 2:
-						fmt.Fprint(file, "2   ")
-						break
-					case 3:
-						fmt.Fprint(file, "3   ")
-						break
-					case 4:
-						fmt.Fprint(file, "4   ")
-						break
-					case 5:
-						fmt.Fprint(file, "5   ")
-						break
-					case 6:
-						fmt.Fprint(file, "6   ")
-						break
-					case 7:
-						fmt.Fprint(file, "7   ")
-						break
-					case 8:
-						fmt.Fprint(file, "8   ")
-						break
-					case 9:
-						fmt.Fprint(file, "9   ")
-						break
-					case 10:
-						fmt.Fprint(file, "10  ")
-						break
-					case 11:
-						fmt.Fprint(file, "11  ")
-						break
-					case 12:
-						fmt.Fprint(file, "12  ")
-						break
-					case 13:
-						fmt.Fprint(file, "13  ")
-						break
-					case 14:
-						fmt.Fprint(file, "14  ")
-						break
-					case 15:
-						fmt.Fprint(file, "15  ")
-						break
-					case 16:
-						fmt.Fprint(file, "16  ")
-						break
-					case 17:
-						fmt.Fprint(file, "17  ")
-						break
-					case 18:
-						fmt.Fprint(file, "18  ")
-						break
-					case 19:
-						fmt.Fprint(file, "19  ")
-						break
-					case 20:
-						fmt.Fprint(file, "20  ")
-						break
-					}
+					fmt.Fprintf(file, "%-4d", data[i2].amount)
 				}
 				fmt.Fprintln(file)
 				continue
@@ -259,7 +131,7 @@ func drawpattern(termboxstatus, isfile, pos int, pattern [12][20]bool) {
 			}
 			fmt.Fprintln(file)
 		}
-	} else if termboxstatus == 1 {
+	} else if istermbox == 1 {
 		err := termbox.Init()
 		if err != nil {
 			return
@@ -283,16 +155,16 @@ func drawpattern(termboxstatus, isfile, pos int, pattern [12][20]bool) {
 		time.Sleep(10 * time.Second)
 	}
 }
-func drawline(termboxstatus, isfile int, line bool, cordx, cordy int) {
-	if termboxstatus == 0 && isfile == 0 {
-		if line {
+func drawline(istermbox, isfile int, isdraw bool, cordx, cordy int) {
+	if istermbox == 0 && isfile == 0 {
+		if isdraw {
 			fmt.Print("***")
 		} else {
 			fmt.Print("   ")
 		}
-	} else if termboxstatus == 1 {
+	} else if istermbox == 1 {
 		for dr := 0; dr < 3; dr++ {
-			if line {
+			if isdraw {
 				termbox.SetCell(cordx+dr, cordy, ' ', termbox.ColorGreen, termbox.ColorGreen)
 				termbox.Flush()
 			} else {
@@ -304,223 +176,12 @@ func drawline(termboxstatus, isfile int, line bool, cordx, cordy int) {
 		termbox.Flush()
 	}
 }
-func drawnum(termboxstatus, isfile int, num int, cordx, cordy int) {
-	if termboxstatus == 0 && isfile == 0 {
-		switch num {
-		case 0:
-			fmt.Print("0  ")
-			break
-		case 1:
-			fmt.Print("1  ")
-			break
-		case 2:
-			fmt.Print("2  ")
-			break
-		case 3:
-			fmt.Print("3  ")
-			break
-		case 4:
-			fmt.Print("4  ")
-			break
-		case 5:
-			fmt.Print("5  ")
-			break
-		case 6:
-			fmt.Print("6  ")
-			break
-		case 7:
-			fmt.Print("7  ")
-			break
-		case 8:
-			fmt.Print("8  ")
-			break
-		case 9:
-			fmt.Print("9  ")
-			break
-		case 10:
-			fmt.Print("10 ")
-			break
-		case 11:
-			fmt.Print("11 ")
-			break
-		case 12:
-			fmt.Print("12 ")
-			break
-		case 13:
-			fmt.Print("13 ")
-			break
-		case 14:
-			fmt.Print("14 ")
-			break
-		case 15:
-			fmt.Print("15 ")
-			break
-		case 16:
-			fmt.Print("16 ")
-			break
-		case 17:
-			fmt.Print("17 ")
-			break
-		case 18:
-			fmt.Print("18 ")
-			break
-		case 19:
-			fmt.Print("19 ")
-			break
-		case 20:
-			fmt.Print("20 ")
-			break
-		}
-	} else if termboxstatus == 1 {
-		switch num {
-		case 0:
-			termbox.SetCell(cordx+0, cordy, '0', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 1:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 2:
-			termbox.SetCell(cordx+0, cordy, '2', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 3:
-			termbox.SetCell(cordx+0, cordy, '3', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 4:
-			termbox.SetCell(cordx+0, cordy, '4', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 5:
-			termbox.SetCell(cordx+0, cordy, '5', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 6:
-			termbox.SetCell(cordx+0, cordy, '6', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 7:
-			termbox.SetCell(cordx+0, cordy, '7', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 8:
-			termbox.SetCell(cordx+0, cordy, '8', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 9:
-			termbox.SetCell(cordx+0, cordy, '9', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 10:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '0', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 11:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 12:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '2', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 13:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '3', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 14:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '4', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 15:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '5', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 16:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '6', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 17:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '7', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 18:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '8', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 19:
-			termbox.SetCell(cordx+0, cordy, '1', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '9', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		case 20:
-			termbox.SetCell(cordx+0, cordy, '2', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+1, cordy, '0', termbox.ColorWhite, termbox.ColorBlack)
-			termbox.SetCell(cordx+2, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.SetCell(cordx+3, cordy, ' ', termbox.ColorBlack, termbox.ColorBlack)
-			termbox.Flush()
-			break
-		}
+func drawnum(istermbox, isfile int, num int, cordx, cordy int) {
+	if istermbox == 0 && isfile == 0 {
+		fmt.Printf("%-3d", num)
+	} else if istermbox == 1 {
+		termbox.SetCursor(cordx, cordy)
+		fmt.Printf("%-4d", num)
 	}
 }
 func task2() {
@@ -596,11 +257,11 @@ func task4() {
 
 func task5() {
 	//drawpattern(0, 0, 0, createpattern("down"))
-	//drawpattern(0, 1, 1, createpattern("down"))
+	drawpattern(0, 1, 1, createpattern("down"))
 }
 func task6() {
 	//drawpattern(0, 1, 2, createpattern("up"))
-	drawpattern(1, 0, 0, createpattern("up"))
+	//drawpattern(1, 0, 0, createpattern("up"))
 }
 func main() {
 	//var some float64
@@ -616,10 +277,10 @@ func main() {
 	if false {
 		task4()
 	}
-	if false {
+	if true {
 		task5()
 	}
-	if true {
+	if false {
 		task6()
 	}
 }
