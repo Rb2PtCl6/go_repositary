@@ -154,7 +154,7 @@ func drawpattern(istermbox, isfile, pos int, pattern [12][20]bool) {
 			pos = 0
 		}
 
-		time.Sleep(100 * time.Second)
+		time.Sleep(30 * time.Second)
 	}
 }
 func drawline(istermbox, isfile int, isdraw bool, cordx, cordy int) {
