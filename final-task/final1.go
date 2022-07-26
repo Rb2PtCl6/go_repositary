@@ -143,16 +143,18 @@ func drawpattern(istermbox, isfile, pos int, pattern [12][20]bool) {
 			if i == 20 {
 				for i6 := 0; i6 < 12; i6++ {
 					drawnum(1, 0, data[i6].amount, pos, i)
+					pos += 3
 				}
 				continue
 			}
 			for i5 := 0; i5 < 12; i5++ {
 				drawline(1, 0, pattern[i5][i], pos, i)
+				pos += 3
 			}
-			pos += 3
+			pos = 0
 		}
-		pos = 0
-		time.Sleep(10 * time.Second)
+
+		time.Sleep(100 * time.Second)
 	}
 }
 func drawline(istermbox, isfile int, isdraw bool, cordx, cordy int) {
@@ -261,7 +263,7 @@ func task5() {
 }
 func task6() {
 	//drawpattern(0, 1, 2, createpattern("up"))
-	//drawpattern(1, 0, 0, createpattern("up"))
+	drawpattern(1, 0, 0, createpattern("up"))
 }
 func main() {
 	//var some float64
@@ -277,10 +279,10 @@ func main() {
 	if false {
 		task4()
 	}
-	if true {
+	if false {
 		task5()
 	}
-	if false {
+	if true {
 		task6()
 	}
 }
